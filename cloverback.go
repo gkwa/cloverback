@@ -1,6 +1,7 @@
 package cloverback
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,6 +11,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"text/template"
+
+	"github.com/atotto/clipboard"
 )
 
 func deleteAllPushbulletRecords() {
@@ -128,8 +131,7 @@ func Main() {
 }
 
 func OutputOrgMode(output io.Writer, reply PushbulletHTTReply) {
-	tmplStr := `** history
-{{range .Pushes}}
+	tmplStr := `{{range .Pushes}}
 *** {{.Title}}
 **** summary 
 
@@ -142,9 +144,24 @@ func OutputOrgMode(output io.Writer, reply PushbulletHTTReply) {
 		return
 	}
 
+	var outputBuffer bytes.Buffer
 	err = tmpl.Execute(output, reply)
 	if err != nil {
 		slog.Error("executing template", "error", err.Error())
+		return
+	}
+
+	err = tmpl.Execute(&outputBuffer, reply)
+	if err != nil {
+		fmt.Println("executing template error:", err)
+		return
+	}
+
+	clipboard.WriteAll(outputBuffer.String())
+
+	_, copyErr := io.Copy(output, &outputBuffer)
+	if copyErr != nil {
+		fmt.Println("copying error:", copyErr)
 		return
 	}
 }
