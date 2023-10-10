@@ -1,1 +1,11 @@
-Loop over my pushbullet items and write them to org mode format
+Motivation:
+
+I love pushbullet to save links to stuff I find while browsing on phone.
+
+I then got tired of copy pasting my links from pushbullet to my org-mode notes.
+
+Loop over my pushbullet items and write them to org mode format.
+
++ backup items to ~/Library/Application Support/cloverback/keys.db
++ expire the backup after 1d
++ delete items from pushbullet
