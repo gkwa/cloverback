@@ -1,5 +1,3 @@
-Motivation:
-
 I love pushbullet to save links to stuff I find while browsing on phone.
 
 I then got tired of copy pasting my links from pushbullet to my org-mode notes.
