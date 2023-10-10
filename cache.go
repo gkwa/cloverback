@@ -16,13 +16,13 @@ import (
 )
 
 var (
-	pbPushesCache *cache.Cache
-	timestamp     int64
-	cacheKey      string
+	mycache   *cache.Cache
+	timestamp int64
+	cacheKey  string
 )
 
 func init() {
-	pbPushesCache = cache.New(12*time.Hour, 24*time.Hour)
+	mycache = cache.New(12*time.Hour, 24*time.Hour)
 	timestamp = time.Now().Unix()
 	cacheKey = fmt.Sprintf("cloverback_%d", timestamp)
 }
@@ -69,13 +69,8 @@ func getCacheRelPath() string {
 	return "cloverback/keys.db"
 }
 
-func cacheString(value string) {
-	slog.Debug("caching", "key", cacheKey, "value", value)
-	pbPushesCache.Set(cacheKey, value, cache.DefaultExpiration)
-}
-
-func getMostRecent() {
-	myMap := pbPushesCache.Items()
+func getMostRecentCacheItem() {
+	myMap := mycache.Items()
 	keys := make([]string, 0, len(myMap))
 	for key := range myMap {
 		keys = append(keys, key)
@@ -83,5 +78,6 @@ func getMostRecent() {
 
 	sort.Strings(keys)
 	key := keys[len(keys)-1]
+
 	slog.Debug("cache", "most recent key", key, "value", myMap[key])
 }
