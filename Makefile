@@ -4,7 +4,7 @@ GOPATH := $(shell go env GOPATH)
 GO_FILES := $(shell find . -name "*.go")
 
 $(BIN): $(GO_FILES)
-	gofumpt -w $<
+	gofumpt -w $(GO_FILES)
 	go build -o $(BIN) cmd/main.go
 
 install: $(GOPATH)/bin/$(BIN)

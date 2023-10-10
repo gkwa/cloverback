@@ -2,7 +2,6 @@ package cloverback
 
 import (
 	"encoding/json"
-	"io"
 	"log/slog"
 	"os"
 
@@ -21,13 +20,7 @@ func getPushBulletAPIKey() string {
 
 func Main() int {
 	apiKey := getPushBulletAPIKey()
-	resp := requestPushbulletData(apiKey)
-
-	bodyBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		slog.Error("reading response", "error", err.Error())
-		return 1
-	}
+	bodyBytes := requestPushbulletData(apiKey)
 
 	cachePath, err := getCachePath(getCacheRelPath())
 	if err != nil {
@@ -47,7 +40,9 @@ func Main() int {
 	if len(pushBulletReply.Pushes) > 0 {
 		buffer := genOrgMode(pushBulletReply)
 		writeBufferToClipboard(buffer)
+		slog.Debug("we got here")
 		writeBufferToStdout(buffer)
+		slog.Debug("we got here2")
 	}
 
 	slog.Debug("caching", "cache path", cachePath)

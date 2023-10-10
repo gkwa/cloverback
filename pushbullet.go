@@ -1,6 +1,7 @@
 package cloverback
 
 import (
+	"io"
 	"log/slog"
 	"net/http"
 )
@@ -11,7 +12,7 @@ func init() {
 	apiURL = "https://api.pushbullet.com/v2/pushes"
 }
 
-func requestPushbulletData(apiKey string) *http.Response {
+func requestPushbulletData(apiKey string) []byte {
 	client := &http.Client{}
 
 	queryParams := map[string]string{
@@ -45,7 +46,13 @@ func requestPushbulletData(apiKey string) *http.Response {
 	}
 	slog.Debug("pushbullet", "type", "response", "status", resp.StatusCode)
 
-	return resp
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		slog.Error("reading response", "error", err.Error())
+		return nil
+	}
+
+	return bodyBytes
 }
 
 func deleteAllPushbulletRecords() {

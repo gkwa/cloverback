@@ -18,9 +18,9 @@ func writeBufferToClipboard(buffer bytes.Buffer) {
 }
 
 func writeBufferToStdout(buffer bytes.Buffer) {
-	_, copyErr := io.Copy(&buffer, os.Stdout)
+	_, copyErr := io.Copy(os.Stdout, &buffer)
 	if copyErr != nil {
-		slog.Error("copy to clipboard", "error", copyErr.Error())
+		slog.Error("copy to stdout", "error", copyErr.Error())
 	}
 }
 
