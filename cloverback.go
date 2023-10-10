@@ -93,8 +93,7 @@ func Main() {
 		return
 	}
 
-	pushBulletJsonBlob := string(body)
-	cacheString(pushBulletJsonBlob)
+	cacheString(string(body))
 
 	var result PushbulletHTTReply
 	if err := json.Unmarshal(body, &result); err != nil { // Parse []byte to go struct pointer
@@ -119,7 +118,9 @@ func Main() {
 	cacheString(string(x))
 
 	if len(result.Pushes) > 0 {
-		OutputOrgMode(os.Stdout, result)
+		buffer := genOrgMode(result)
+		writeBufferToClipboard(buffer)
+		writeBufferToStdout(buffer)
 	}
 
 	slog.Debug("caching", "cache path", cachePath)
@@ -130,7 +131,19 @@ func Main() {
 	deleteAllPushbulletRecords()
 }
 
-func OutputOrgMode(output io.Writer, reply PushbulletHTTReply) {
+func writeBufferToClipboard(buffer bytes.Buffer) {
+	clipboard.WriteAll(buffer.String())
+}
+
+func writeBufferToStdout(buffer bytes.Buffer) {
+	_, copyErr := io.Copy(&buffer, os.Stdout)
+	if copyErr != nil {
+		fmt.Println("copying error:", copyErr)
+		return
+	}
+}
+
+func genOrgMode(reply PushbulletHTTReply) bytes.Buffer {
 	tmplStr := `{{range .Pushes}}
 *** {{.Title}}
 **** summary 
@@ -141,29 +154,16 @@ func OutputOrgMode(output io.Writer, reply PushbulletHTTReply) {
 	tmpl, err := template.New("pushTemplate").Parse(tmplStr)
 	if err != nil {
 		slog.Error("parsing template", "error", err.Error())
-		return
+		return bytes.Buffer{}
 	}
 
 	var outputBuffer bytes.Buffer
-	err = tmpl.Execute(output, reply)
-	if err != nil {
-		slog.Error("executing template", "error", err.Error())
-		return
-	}
-
 	err = tmpl.Execute(&outputBuffer, reply)
 	if err != nil {
-		fmt.Println("executing template error:", err)
-		return
+		slog.Error("executing template", "error", err.Error())
+		return bytes.Buffer{}
 	}
-
-	clipboard.WriteAll(outputBuffer.String())
-
-	_, copyErr := io.Copy(output, &outputBuffer)
-	if copyErr != nil {
-		fmt.Println("copying error:", copyErr)
-		return
-	}
+	return outputBuffer
 }
 
 func saveValuesToFile() {
