@@ -6,6 +6,7 @@ require (
 	github.com/adrg/xdg v0.4.0
 	github.com/atotto/clipboard v0.1.4
 	github.com/patrickmn/go-cache v2.1.0+incompatible
+	github.com/taylormonacelli/goldbug v0.0.1
 )
 
 require golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359 // indirect

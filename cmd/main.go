@@ -5,6 +5,7 @@ import (
 	"log/slog"
 
 	"github.com/taylormonacelli/cloverback"
+	"github.com/taylormonacelli/goldbug"
 )
 
 var (
@@ -21,9 +22,9 @@ func main() {
 
 	if verbose || logFormat != "" {
 		if logFormat == "json" {
-			cloverback.SetDefaultLoggerJson(slog.LevelDebug)
+			goldbug.SetDefaultLoggerJson(slog.LevelDebug)
 		} else {
-			cloverback.SetDefaultLoggerText(slog.LevelDebug)
+			goldbug.SetDefaultLoggerText(slog.LevelDebug)
 		}
 	}
 
