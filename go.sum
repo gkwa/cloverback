@@ -15,8 +15,14 @@ github.com/taylormonacelli/goldbug v0.0.0-20231010235331-c0896d143532 h1:Tw/iSdP
 github.com/taylormonacelli/goldbug v0.0.0-20231010235331-c0896d143532/go.mod h1:HN8Mpu5DRSZSG6ZOGVZN06Suhnx2paUhXVyekhniaDI=
 github.com/taylormonacelli/goldbug v0.0.1 h1:bGj1nqeJk0U3BdS002Pi4AgxOgaVCPDk8eVq653gcVo=
 github.com/taylormonacelli/goldbug v0.0.1/go.mod h1:HN8Mpu5DRSZSG6ZOGVZN06Suhnx2paUhXVyekhniaDI=
+github.com/taylormonacelli/goldbug v0.0.2 h1:l7p2NMGUK3gek0Y73nJSd0bQ7qx2lAJQHB8DWYlymQE=
+github.com/taylormonacelli/goldbug v0.0.2/go.mod h1:HN8Mpu5DRSZSG6ZOGVZN06Suhnx2paUhXVyekhniaDI=
+github.com/taylormonacelli/goldbug v0.0.5 h1:7PplDdbe1ra+2XbLIS4kReVXmf0kSyOQoM1xicSH4H0=
+github.com/taylormonacelli/goldbug v0.0.5/go.mod h1:HN8Mpu5DRSZSG6ZOGVZN06Suhnx2paUhXVyekhniaDI=
 golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359 h1:2B5p2L5IfGiD7+b9BOoRMC6DgObAVZV+Fsp050NqXik=
 golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.13.0 h1:Af8nKPmuFypiUBjVoU9V20FiaFXOcuZI21p0ycVYYGE=
+golang.org/x/sys v0.13.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

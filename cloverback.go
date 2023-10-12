@@ -3,26 +3,17 @@ package cloverback
 import (
 	"encoding/json"
 	"log/slog"
-	"os"
 
 	"github.com/patrickmn/go-cache"
 )
 
-func getPushBulletAPIKey() string {
-	apiKey := os.Getenv("PUSHBULLET_API_KEY")
-	if apiKey == "" {
-		slog.Error("PUSHBULLET_API_KEY environment variable is not set.")
-		return ""
-	}
+var cacheRelPath = "cloverback/keys.db"
 
-	return apiKey
-}
-
-func Main() int {
+func Main(noExpunge bool) int {
 	apiKey := getPushBulletAPIKey()
 	bodyBytes := requestPushbulletData(apiKey)
 
-	cachePath, err := getCachePath(getCacheRelPath())
+	cachePath, err := getCachePath(cacheRelPath)
 	if err != nil {
 		panic(err)
 	}
@@ -50,7 +41,9 @@ func Main() int {
 	slog.Debug("cache", "item count", mycache.ItemCount())
 	getMostRecentCacheItem()
 	saveValuesToFile()
-	deleteAllPushbulletRecords()
+	if !noExpunge {
+		expungeAllPushbulletRecords()
+	}
 
 	return 0
 }

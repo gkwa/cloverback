@@ -4,6 +4,7 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+	"os"
 )
 
 var apiURL string
@@ -55,7 +56,7 @@ func requestPushbulletData(apiKey string) []byte {
 	return bodyBytes
 }
 
-func deleteAllPushbulletRecords() {
+func expungeAllPushbulletRecords() {
 	apiKey := getPushBulletAPIKey()
 
 	client := &http.Client{}
@@ -80,4 +81,13 @@ func deleteAllPushbulletRecords() {
 	} else {
 		slog.Error("pushbullet", "type", "response", "status", resp.StatusCode)
 	}
+}
+
+func getPushBulletAPIKey() string {
+	apiKey := os.Getenv("PUSHBULLET_API_KEY")
+	if apiKey == "" {
+		slog.Error("PUSHBULLET_API_KEY environment variable is not set.")
+	}
+
+	return apiKey
 }

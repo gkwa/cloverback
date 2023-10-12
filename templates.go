@@ -12,7 +12,8 @@ func genOrgMode(reply PushbulletHTTReply) bytes.Buffer {
 **** summary 
 
 {{.URL}}
-{{end}}`
+{{end}}
+`
 
 	tmpl, err := template.New("pushTemplate").Parse(tmplStr)
 	if err != nil {

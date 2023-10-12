@@ -65,10 +65,6 @@ func logPathStats(filePath string) {
 	slog.Debug("owner", "path", filePath, "user", u.Username)
 }
 
-func getCacheRelPath() string {
-	return "cloverback/keys.db"
-}
-
 func getMostRecentCacheItem() {
 	myMap := mycache.Items()
 	keys := make([]string, 0, len(myMap))
