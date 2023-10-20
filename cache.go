@@ -49,7 +49,7 @@ func getCachePath(configRelPath string) (string, error) {
 func logPathStats(filePath string) {
 	fileInfo, err := os.Stat(filePath)
 	if err != nil {
-		slog.Error("stat", "path", filePath, "error", err.Error())
+		slog.Error("stat", "path", filePath, "error", err)
 		return
 	}
 
@@ -58,7 +58,7 @@ func logPathStats(filePath string) {
 	// Use the user package to get the user information
 	u, err := user.LookupId(fmt.Sprintf("%d", fileUID))
 	if err != nil {
-		slog.Error("user info", "user", u, "error", err.Error())
+		slog.Error("user info", "user", u, "error", err)
 		return
 	}
 

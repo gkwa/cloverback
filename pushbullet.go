@@ -23,7 +23,7 @@ func requestPushbulletData(apiKey string) []byte {
 
 	req, err := http.NewRequest("GET", apiURL, nil)
 	if err != nil {
-		slog.Error("NewRequest", "error", err.Error())
+		slog.Error("NewRequest", "error", err)
 		return nil
 	}
 
@@ -37,7 +37,7 @@ func requestPushbulletData(apiKey string) []byte {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		slog.Error("pushbullet", "type", "request", "status", "error", err.Error())
+		slog.Error("pushbullet", "type", "request", "status", "error", "error", err)
 	}
 	defer resp.Body.Close()
 
@@ -49,7 +49,7 @@ func requestPushbulletData(apiKey string) []byte {
 
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		slog.Error("reading response", "error", err.Error())
+		slog.Error("reading response", "error", err)
 		return nil
 	}
 

@@ -23,7 +23,7 @@ func Main(noExpunge bool) int {
 	mycache.LoadFile(cachePath)
 
 	if err := json.Unmarshal(bodyBytes, &pushBulletReply); err != nil { // Parse []byte to go struct pointer
-		slog.Error("unmarshalling response body", "error", err.Error())
+		slog.Error("unmarshalling response body", "error", err)
 		return 1
 	}
 
@@ -52,7 +52,7 @@ func saveResponse(result PushbulletHTTReply) error {
 	resultBytes, err := json.Marshal(result)
 	slog.Debug("json response", "json", resultBytes)
 	if err != nil {
-		slog.Error("marhsalling response body", "error", err.Error())
+		slog.Error("marhsalling response body", "error", err)
 		return err
 	}
 

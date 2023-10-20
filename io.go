@@ -37,7 +37,7 @@ func saveValuesToFile() {
 	tempDir := "/tmp/cloverback"
 	err := os.MkdirAll(tempDir, 0o755)
 	if err != nil {
-		slog.Error("make temp dir", "error", err.Error())
+		slog.Error("make temp dir", "error", err)
 		panic(err)
 	}
 	for _, key := range keys {
@@ -59,7 +59,7 @@ func saveValuesToFile() {
 			} else if os.IsNotExist(err) {
 				file, err := os.Create(tempFile)
 				if err != nil {
-					slog.Error("file create", "error", err.Error())
+					slog.Error("file create", "error", err)
 					return
 				}
 				defer file.Close()
@@ -70,7 +70,7 @@ func saveValuesToFile() {
 				bytes := []byte(v.(string))
 				err = json.Unmarshal(bytes, &x)
 				if err != nil {
-					slog.Error("unmarshalling", "error", err.Error())
+					slog.Error("unmarshalling", "error", err)
 					panic(err)
 				}
 
@@ -81,13 +81,13 @@ func saveValuesToFile() {
 
 				_, err = file.WriteString(string(jsBytes))
 				if err != nil {
-					slog.Error("file write", "error", err.Error())
+					slog.Error("file write", "error", err)
 					return
 				}
 				slog.Debug("Config file created successfully!")
 
 			} else {
-				slog.Error("file check", "error", err.Error())
+				slog.Error("file check", "error", err)
 			}
 		} else {
 			slog.Debug("Input does not match the expected pattern.")
