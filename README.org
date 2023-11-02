@@ -1,4 +1,4 @@
-I love pushbullet in order to save links to stuff I find while browsing on phone.
+I love using pushbullet in order to save links to stuff I find while browsing on phone.
 
 I then got tired of copy pasting my links from pushbullet history https://www.pushbullet.com/#settings/history to my org-mode notes.
 
