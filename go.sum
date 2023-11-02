@@ -19,6 +19,8 @@ github.com/taylormonacelli/goldbug v0.0.2 h1:l7p2NMGUK3gek0Y73nJSd0bQ7qx2lAJQHB8
 github.com/taylormonacelli/goldbug v0.0.2/go.mod h1:HN8Mpu5DRSZSG6ZOGVZN06Suhnx2paUhXVyekhniaDI=
 github.com/taylormonacelli/goldbug v0.0.5 h1:7PplDdbe1ra+2XbLIS4kReVXmf0kSyOQoM1xicSH4H0=
 github.com/taylormonacelli/goldbug v0.0.5/go.mod h1:HN8Mpu5DRSZSG6ZOGVZN06Suhnx2paUhXVyekhniaDI=
+github.com/taylormonacelli/goldbug v0.0.6 h1:2NQnMjAfznHkKh8dKPTUHJqnswgqWrcF/NhOnm4TQRI=
+github.com/taylormonacelli/goldbug v0.0.6/go.mod h1:RmeCuiI1RYYPob+BPHEZcmp+IVd6EkoHsoRukenJmH0=
 golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359 h1:2B5p2L5IfGiD7+b9BOoRMC6DgObAVZV+Fsp050NqXik=
 golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.13.0 h1:Af8nKPmuFypiUBjVoU9V20FiaFXOcuZI21p0ycVYYGE=

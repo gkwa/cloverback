@@ -9,9 +9,8 @@ import (
 func genOrgMode(reply PushbulletHTTReply) bytes.Buffer {
 	tmplStr := `{{range .Pushes}}
 *** {{.Title}}
-**** summary 
 
-{{.URL}}
+[[{{.URL}}]]
 {{end}}
 `
 
