@@ -21,7 +21,7 @@ func Main(noExpunge bool) int {
 	cacheDir := filepath.Dir(cachePath)
 
 	respCount := 0
-	var pushSlice []Push
+	var pushes []Push
 	pageCursor := ""
 
 	// results/pushes are paginated 20 per page
@@ -49,8 +49,8 @@ func Main(noExpunge bool) int {
 
 		slog.Debug("pushbullet message", "count", len(pushBulletReply.Pushes))
 
-		pushSlice = append(pushSlice, pushBulletReply.Pushes...)
-		slog.Debug("push slice", "items", len(pushSlice))
+		pushes = append(pushes, pushBulletReply.Pushes...)
+		slog.Debug("push slice", "items", len(pushes))
 
 		if len(pushBulletReply.Pushes) == 0 {
 			break
@@ -59,8 +59,8 @@ func Main(noExpunge bool) int {
 		pageCursor = pushBulletReply.Cursor
 	}
 
-	backupPushbullets(pushSlice)
-	buffer := genOrgMode(pushSlice)
+	backupPushbullets(pushes)
+	buffer := genOrgMode(pushes, renderTmpl)
 
 	clipboardWriter := &ClipboardWriter{}
 	stdoutWriter := &StdoutWriter{}

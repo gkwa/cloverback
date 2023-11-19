@@ -6,14 +6,7 @@ import (
 	"text/template"
 )
 
-func genOrgMode(pushes []Push) bytes.Buffer {
-	tmplStr := `{{range .}}
-*** {{.Title}}
-
-{{.URL}}
-{{end}}
-`
-
+func renderTmpl(pushes []Push, tmplStr string) bytes.Buffer {
 	tmpl, err := template.New("pushTemplate").Parse(tmplStr)
 	if err != nil {
 		slog.Error("parsing template", "error", err)
@@ -28,4 +21,15 @@ func genOrgMode(pushes []Push) bytes.Buffer {
 	}
 
 	return outputBuffer
+}
+
+func genOrgMode(pushes []Push, renderer func(pushes []Push, tmplStr string) bytes.Buffer) bytes.Buffer {
+	tmplStr := `{{range .}}
+*** {{.Title}}
+
+{{.URL}}
+{{end}}
+`
+
+	return renderer(pushes, tmplStr)
 }
