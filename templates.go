@@ -6,11 +6,11 @@ import (
 	"text/template"
 )
 
-func genOrgMode(reply PushbulletHTTReply) bytes.Buffer {
-	tmplStr := `{{range .Pushes}}
+func genOrgMode(pushes []Push) bytes.Buffer {
+	tmplStr := `{{range .}}
 *** {{.Title}}
 
-[[{{.URL}}]]
+{{.URL}}
 {{end}}
 `
 
@@ -21,7 +21,7 @@ func genOrgMode(reply PushbulletHTTReply) bytes.Buffer {
 	}
 
 	var outputBuffer bytes.Buffer
-	err = tmpl.Execute(&outputBuffer, reply)
+	err = tmpl.Execute(&outputBuffer, pushes)
 	if err != nil {
 		slog.Error("executing template", "error", err)
 		return bytes.Buffer{}
