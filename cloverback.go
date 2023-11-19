@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"path/filepath"
 
 	"github.com/patrickmn/go-cache"
 )
@@ -17,7 +18,9 @@ func Main(noExpunge bool) int {
 	}
 	mycache.LoadFile(cachePath)
 
-	respCount := 1
+	cacheDir := filepath.Dir(cachePath)
+
+	respCount := 0
 	var pushSlice []Push
 	pageCursor := ""
 
@@ -28,42 +31,36 @@ func Main(noExpunge bool) int {
 		}
 
 		respBody := requestPushbulletData(req)
+		respCount++
 
-		filePath := fmt.Sprintf("debug_resp_%02d.json", respCount)
-		if err := savePushbulletResponseForDebug(respBody, filePath); err != nil {
+		debugPath := filepath.Join(cacheDir, fmt.Sprintf("debug_resp_%02d.json", respCount))
+		if err := savePushbulletResponseForDebug(respBody, debugPath); err != nil {
 			slog.Error("saving response body to file", "error", err)
 			return 1
 		}
 
 		var pushBulletReply PushbulletHTTReply
-
 		if err := json.Unmarshal(respBody, &pushBulletReply); err != nil { // Parse []byte to go struct pointer
 			slog.Error("unmarshalling response body", "error", err)
 			return 1
 		}
 
+		slog.Debug("pushbullet message", "count", len(pushBulletReply.Pushes))
+
 		pushSlice = append(pushSlice, pushBulletReply.Pushes...)
 		slog.Debug("push slice", "items", len(pushSlice))
-
-		// // saveResponse(pushBulletReply)
-		// if len(pushBulletReply.Pushes) > 0 {
-		// 	buffer := genOrgMode(pushBulletReply)
-		// 	writeBufferToClipboard(buffer)
-		// 	// writeBufferToStdout(buffer)
-		// }
-
-		pageCursor = pushBulletReply.Cursor
-		slog.Debug("cursor debug", "cursor", pageCursor)
-		slog.Debug("pushbullet message", "count", len(pushBulletReply.Pushes))
 
 		if len(pushBulletReply.Pushes) == 0 {
 			break
 		}
-		respCount++
+
+		pageCursor = pushBulletReply.Cursor
 	}
 
+	backupPushbullets(pushSlice)
 	buffer := genOrgMode(pushSlice)
 	writeBufferToClipboard(buffer)
+	writeBufferToStdout(buffer)
 
 	slog.Debug("caching", "cache path", cachePath)
 	mycache.SaveFile(cachePath)
@@ -77,7 +74,7 @@ func Main(noExpunge bool) int {
 	return 0
 }
 
-func saveResponse(result PushbulletHTTReply) error {
+func backupPushbullets(result []Push) error {
 	resultBytes, err := json.Marshal(result)
 	slog.Debug("json response", "json", resultBytes)
 	if err != nil {

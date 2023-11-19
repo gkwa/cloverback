@@ -66,7 +66,7 @@ func saveValuesToFile() {
 
 				v, _ := mycache.Get(key)
 
-				var x PushbulletHTTReply
+				var x []Push
 				bytes := []byte(v.(string))
 				err = json.Unmarshal(bytes, &x)
 				if err != nil {
