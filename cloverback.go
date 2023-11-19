@@ -24,9 +24,11 @@ func Main(noExpunge bool) int {
 	var pushSlice []Push
 	pageCursor := ""
 
+	// results/pushes are paginated 20 per page
 	for {
 		req, err := genPushbulletRequest(pageCursor)
 		if err != nil {
+			slog.Error("pushbullet request generation", "error", err)
 			return 1
 		}
 
