@@ -13,14 +13,27 @@ import (
 	"github.com/atotto/clipboard"
 )
 
-func writeBufferToClipboard(buffer bytes.Buffer) {
-	clipboard.WriteAll(buffer.String())
+type Writer interface {
+	Write(buffer *bytes.Buffer) error
 }
 
-func writeBufferToStdout(buffer bytes.Buffer) {
-	_, copyErr := io.Copy(os.Stdout, &buffer)
-	if copyErr != nil {
-		slog.Error("copy to stdout", "error", copyErr.Error())
+type ClipboardWriter struct{}
+
+func (cw *ClipboardWriter) Write(buffer *bytes.Buffer) error {
+	return clipboard.WriteAll(buffer.String())
+}
+
+type StdoutWriter struct{}
+
+func (sw *StdoutWriter) Write(buffer *bytes.Buffer) error {
+	_, err := io.Copy(os.Stdout, buffer)
+	return err
+}
+
+func writeBuffer(writer Writer, buffer *bytes.Buffer) {
+	err := writer.Write(buffer)
+	if err != nil {
+		fmt.Println("Error writing:", err)
 	}
 }
 

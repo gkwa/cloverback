@@ -61,8 +61,12 @@ func Main(noExpunge bool) int {
 
 	backupPushbullets(pushSlice)
 	buffer := genOrgMode(pushSlice)
-	writeBufferToClipboard(buffer)
-	writeBufferToStdout(buffer)
+
+	clipboardWriter := &ClipboardWriter{}
+	stdoutWriter := &StdoutWriter{}
+
+	writeBuffer(clipboardWriter, &buffer)
+	writeBuffer(stdoutWriter, &buffer)
 
 	slog.Debug("caching", "cache path", cachePath)
 	mycache.SaveFile(cachePath)
