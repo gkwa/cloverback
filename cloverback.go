@@ -60,7 +60,6 @@ func Main(noExpunge bool) int {
 	}
 
 	backupPushbullets(pushes)
-	slog.Info("pushes", "count", len(pushes))
 	buffer := genOrgMode(pushes, renderTmpl)
 
 	clipboardWriter := &ClipboardWriter{}
@@ -78,6 +77,7 @@ func Main(noExpunge bool) int {
 		expungeAllPushbulletRecords()
 	}
 
+	slog.Info("pushes", "count", len(pushes))
 	return 0
 }
 
