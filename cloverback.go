@@ -60,6 +60,7 @@ func Main(noExpunge bool) int {
 	}
 
 	backupPushbullets(pushes)
+	slog.Info("pushes", "count", len(pushes))
 	buffer := genOrgMode(pushes, renderTmpl)
 
 	clipboardWriter := &ClipboardWriter{}
