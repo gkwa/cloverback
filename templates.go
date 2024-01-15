@@ -20,6 +20,12 @@ func renderTmpl(pushes []Push, tmplStr string) bytes.Buffer {
 		return bytes.Buffer{}
 	}
 
+	trimmedOutput := bytes.TrimSpace(outputBuffer.Bytes())
+	trimmedOutput = append(trimmedOutput, '\n')
+
+	outputBuffer.Reset()
+	outputBuffer.Write(trimmedOutput)
+
 	return outputBuffer
 }
 
